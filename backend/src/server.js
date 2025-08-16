@@ -15,12 +15,17 @@ const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true, // allow frontend to send cookies
-  })
-);
+ 
+
+app.use(cors({
+  origin: [
+    "http://localhost:5173",  // local frontend dev
+    "http://localhost:3000",  // if CRA
+    "https://chatzee2-nf813mnt4-amishagupta22-nshmeduins-projects.vercel.app/" // deployed frontend
+  ],
+  credentials: true
+}));
+
 
 app.use(express.json());
 app.use(cookieParser());
