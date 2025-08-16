@@ -17,15 +17,17 @@ const __dirname = path.resolve();
 
  
 
-app.use(
-  cors({
-    origin: [
-      "https://chatzee2-amishagupta22-nshmeduins-projects.vercel.app", // your Vercel frontend
-      "http://localhost:5173", // keep for local dev
-    ],
-    credentials: true, // if you're using cookies/auth
-  })
-);
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true); // allow local tools like Postman
+    if (origin.includes("vercel.app") || origin === "http://localhost:5173") {
+      return callback(null, true);
+    }
+    return callback(new Error("CORS not allowed"));
+  },
+  credentials: true
+}));
+
 
 
 app.use(express.json());
