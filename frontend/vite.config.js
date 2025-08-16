@@ -4,5 +4,14 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/", // ensure correct asset paths
+  base: "/", // keep frontend assets path correct
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://chatzee-xsx3.onrender.com", // your Render backend
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 });
